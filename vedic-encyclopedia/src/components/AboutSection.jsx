@@ -1,17 +1,17 @@
 export default function AboutSection() {
   return (
-    <section className="mt-">
+    <section id="about" className="mt-20 px-6 md:px-16">
       <h3 className="text-4xl font-serif text-orange-950 mb-10 text-left px-9">
-        About the Vedic Encyclopedia
+        About ISKCON & its Vedic Encyclopedia
       </h3>
 
         <div className="flex w-full">
             <div className="w-3/4 px-10">
             <p className="text-xl leading-relaxed text-orange-900 mb-16 text-justify">
-       A Vedic Encyclopedia is a comprehensive compilation of knowledge derived from the ancient Vedic texts of India, including the Rigveda, Samaveda, Yajurveda, Atharvaveda, Upanishads, and Puranas.
-       It seeks to preserve and organize the profound wisdom of the Vedas, covering a wide range of subjects such as philosophy, spirituality, rituals, astronomy, mathematics, medicine (Ayurveda), arts, and cultural practices.
-       By providing structured information, translations, and references, a Vedic Encyclopedia serves as an invaluable resource for scholars, students, and enthusiasts, allowing them to explore the deep connections between Vedic knowledge and 
-       contemporary science, culture, and spiritual practice. Modern digital versions often include images, diagrams, and search features, making this ancient wisdom easily accessible and applicable for education, research, and personal growth.
+       The International Society for Krishna Consciousness (ISKCON) is a global spiritual organization dedicated to preserving, practicing, and sharing the timeless wisdom of the Vedic tradition. Founded by His Divine Grace A. C. Bhaktivedanta Swami Prabhupada, ISKCON works to promote spiritual education, cultural values, and ethical living based on the teachings of the Bhagavad Gita, Srimad Bhagavatam, and other sacred scriptures. Through temples, educational initiatives, and community service programs, ISKCON strives to nurture inner growth, devotion, and harmony in society.
+        <br />
+        <br />
+       The ISKCON Vedic Encyclopedia is a digital knowledge initiative designed to organize and present authentic Vedic information in a structured and accessible form. It brings together concepts from scriptures, philosophy, spirituality, rituals, deities, and traditional sciences to create a reliable learning platform for students, researchers, and seekers. By combining ancient wisdom with modern technology, the encyclopedia aims to preserve India’s spiritual heritage while making it easily searchable, understandable, and relevant for contemporary learning and exploration.
       </p>
       </div>
     <div className="w-1/4 p-3 ">

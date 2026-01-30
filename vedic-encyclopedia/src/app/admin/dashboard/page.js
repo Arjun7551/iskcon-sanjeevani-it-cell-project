@@ -1,24 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, LogOut, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { getCategories } from '@/actions/category.actions';
-import { getArticles } from '@/actions/article.actions';
+
+/* ✅ CATEGORY — ADMIN ONLY */
 import {
+  getCategories,
   addCategory,
   updateCategory,
-  deleteCategory as deleteCategoryDB,
-} from '@/actions/category.actions';
-import { deleteArticlesByCategory } from '@/actions/article.actions';
+  deleteCategory,
+} from '@/actions/category.admin.actions';
 
-
+/* ✅ ARTICLE — ADMIN ONLY */
 import {
+  getArticles,
   addArticle,
   updateArticle,
-  deleteArticle as deleteArticleDB,
-} from '@/actions/article.actions';
+  deleteArticle,
+  deleteArticlesByCategory,
+} from '@/actions/article.admin.actions';
+
 
 
 
@@ -96,13 +98,14 @@ export default function AdminDashboard() {
 
 
 
-  const deleteCategory = async (id) => {
-  await deleteArticlesByCategory(id); // delete from articles where category_id = id
-  await deleteCategoryDB(id);
+ const deleteCategoryHandler = async (id) => {
+  await deleteArticlesByCategory(id);
+  await deleteCategory(id);
 
   const cats = await getCategories();
   setCategories(cats || []);
 };
+
 
   /* ================= ARTICLE ================= */
 
@@ -143,13 +146,13 @@ export default function AdminDashboard() {
 };
 
 
-  const deleteArticle = async (id) => {
-    await deleteArticleDB(id);
+  const deleteArticleHandler = async (id) => {
+  await deleteArticle(id);
 
-const arts = await getArticles();
-setArticles(arts || []);
+  const arts = await getArticles();
+  setArticles(arts || []);
+};
 
-  };
 
   /* ================= LOGOUT ================= */
 
@@ -516,9 +519,10 @@ setArticles(arts || []);
               await deleteCategory(confirm.id);
             }
 
-            if (confirm.type === 'article') {
-              await deleteArticle(confirm.id);
-            }
+           if (confirm.type === 'article') {
+  await deleteArticleHandler(confirm.id);
+}
+
 
             setConfirm({ open: false, type: null, id: null });
           }}
