@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function middleware(request) {
@@ -6,45 +6,11 @@ export async function middleware(request) {
 
   // Only protect /admin/dashboard
   if (pathname === '/admin/dashboard') {
-    let response = NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      {
-        cookies: {
-          getAll() {
-            const cookies = [];
-            request.cookies.getAll().forEach(cookie => {
-              cookies.push({ name: cookie.name, value: cookie.value });
-            });
-            return cookies;
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              response.cookies.set(name, value, options);
-            });
-          },
-        },
-      }
-    );
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      // If no user, redirect to login
-      if (!user) {
-        return NextResponse.redirect(new URL('/admin/login', request.url));
-      }
-
-      return response;
-    } catch (error) {
-      // If there's any error checking auth, redirect to login
-      console.error('Auth error in middleware:', error);
+    // If no user, redirect to login
+    if (!user) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }
